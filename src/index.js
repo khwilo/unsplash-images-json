@@ -9,19 +9,48 @@ const unsplash = createApi({
 });
 
 // Search for photos
-unsplash.search
-  .getPhotos({
-    query: 'architecture',
-    page: 1,
-    perPage: 10,
-    orientation: 'portrait',
-  })
-  .then((data) => {
+async function fetchPhotos(
+  query,
+  page = 1,
+  perPage = 10,
+  orientation = 'portrait',
+  transformResult = false
+) {
+  try {
+    const data = await unsplash.search.getPhotos({
+      query,
+      page,
+      perPage,
+      orientation,
+    });
     if (data.errors) {
       console.log('[FETCHING PHOTOS ERROR]: ', data.errors[0]);
     } else {
       const { results } = data.response;
-      console.log(JSON.stringify(results, null, 2));
-      console.log(results.length);
+      const output = transformResult
+        ? results.map((result) => {
+            return {
+              id: result.id,
+              description: result.description,
+              alt_description: result.alt_description,
+              imgThumb: result.urls.thumb,
+              img: result.urls.regular,
+              link: result.links.html,
+              userId: result.user.id,
+              username: result.user.username,
+              userLink: result.user.links.html,
+              tags: result.tags.map((tag) => {
+                return tag.title;
+              }),
+            };
+          })
+        : results;
+      console.log('Fetching photos done!');
+      return output;
     }
-  });
+  } catch (error) {
+    console.log('[ERROR OCCURRED]: ', error);
+  }
+}
+
+fetchPhotos('architecture');
