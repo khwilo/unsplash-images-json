@@ -1,6 +1,15 @@
 require('dotenv').config();
+const fs = require('fs');
 const nodeFetch = require('node-fetch');
+const path = require('path');
 const { createApi } = require('unsplash-js');
+
+const dataDirectory = path.resolve(__dirname, '..', 'data'); // save photos JSON files here
+const jsonFilePath = path.join(dataDirectory, 'photos.json');
+
+if (!fs.existsSync(dataDirectory)) {
+  fs.mkdirSync(dataDirectory);
+}
 
 // Create an instance of the Unsplash API
 const unsplash = createApi({
@@ -58,7 +67,8 @@ async function fetchListOfVariousPhotos(queries, transform) {
 
     const results = await Promise.all(fetchedResults);
     const list = [].concat.apply([], results);
-    console.log(JSON.stringify(list, null, 2));
+
+    fs.createWriteStream(jsonFilePath).write(JSON.stringify(list, null, 2));
   } catch (error) {
     console.log('[FETCHING VARIOUS PHOTOS ERROR]: ', error);
   }
