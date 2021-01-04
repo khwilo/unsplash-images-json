@@ -1,0 +1,25 @@
+{
+  "name": "unsplash-images-json",
+  "version": "1.0.0",
+  "description": "Fetch images from Unsplash and write the fetched images data to a JSON file",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/khwilo/unsplash-images-json.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/khwilo/unsplash-images-json/issues"
+  },
+  "homepage": "https://github.com/khwilo/unsplash-images-json#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "node-fetch": "^2.6.1",
+    "unsplash-js": "^7.0.2"
+  }
+}
