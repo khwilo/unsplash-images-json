@@ -13,15 +13,19 @@ I decided to implement a simple logic where I fetch images from [Unsplash](https
 
 ## Getting started
 
-1. Clone this repository:
+1. Register as a developer on Unsplash from this link: <https://unsplash.com/developers>.
+
+2. Clone this repository:
 
 ```
 git clone https://github.com/khwilo/unsplash-images-json.git
 ```
 
-2. Run `yarn` to install the project dependencies
+3. Create a `.env` file and add your API access key. View the format in the `.env-sample` that is provided in the project root directory.
 
-3. Run `yarn start` to run the application
+4. Run `yarn` or `npm install` to install the project dependencies.
+
+5. Run `yarn start` or `npm start` to run the application.
 
 ## How to use
 
