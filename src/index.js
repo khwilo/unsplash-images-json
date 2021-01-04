@@ -9,19 +9,13 @@ const unsplash = createApi({
 });
 
 // Search for photos
-async function fetchPhotos(
-  query,
-  page = 1,
-  perPage = 10,
-  orientation = 'portrait',
-  transformResult = false
-) {
+async function fetchPhotos(query, transformResult) {
   try {
     const data = await unsplash.search.getPhotos({
       query,
-      page,
-      perPage,
-      orientation,
+      page: 1,
+      perPage: 10,
+      orientation: 'portrait',
     });
     if (data.errors) {
       console.log('[FETCHING PHOTOS ERROR]: ', data.errors[0]);
@@ -53,4 +47,21 @@ async function fetchPhotos(
   }
 }
 
-fetchPhotos('architecture');
+// Fetch various photos
+async function fetchListOfVariousPhotos(queries, transform) {
+  try {
+    const fetchedResults = [];
+
+    queries.forEach((query) => {
+      fetchedResults.push(fetchPhotos(query, transform));
+    });
+
+    const results = await Promise.all(fetchedResults);
+    const list = [].concat.apply([], results);
+    console.log(JSON.stringify(list, null, 2));
+  } catch (error) {
+    console.log('[FETCHING VARIOUS PHOTOS ERROR]: ', error);
+  }
+}
+
+fetchListOfVariousPhotos(['architecture', 'textures patterns', 'galaxy'], true);
