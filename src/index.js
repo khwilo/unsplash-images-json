@@ -4,6 +4,8 @@ const nodeFetch = require('node-fetch');
 const path = require('path');
 const { createApi } = require('unsplash-js');
 
+const { shuffleArray } = require('./utils');
+
 const dataDirectory = path.resolve(__dirname, '..', 'data'); // save photos JSON files here
 const jsonFilePath = path.join(dataDirectory, 'photos.json');
 
@@ -48,7 +50,7 @@ async function fetchPhotos(query, transformResult) {
             };
           })
         : results;
-      console.log('Fetching photos done!');
+      console.log(`Finished fetching ${query} photos!`);
       return output;
     }
   } catch (error) {
@@ -68,7 +70,12 @@ async function fetchListOfVariousPhotos(queries, transform) {
     const results = await Promise.all(fetchedResults);
     const list = [].concat.apply([], results);
 
-    fs.createWriteStream(jsonFilePath).write(JSON.stringify(list, null, 2));
+    const shuffledList = [...list]; // create a copy of the list of photos
+    shuffleArray(shuffledList); // Shuffle the list of photos
+
+    fs.createWriteStream(jsonFilePath).write(
+      JSON.stringify(shuffledList, null, 2)
+    );
   } catch (error) {
     console.log('[FETCHING VARIOUS PHOTOS ERROR]: ', error);
   }
