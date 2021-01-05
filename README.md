@@ -68,7 +68,7 @@ This project has a function called `fetchListOfVariousPhotos` that takes two arg
       <td>string</td>
     </tr>
     <tr>
-      <td>username</td>
+      <td>userName</td>
       <td>string</td>
     </tr>
     <tr>
