@@ -2,7 +2,7 @@ require('dotenv').config();
 const fs = require('fs');
 const nodeFetch = require('node-fetch');
 const path = require('path');
-const readline = require('readline');
+const prompt = require('prompt-sync')();
 const { createApi } = require('unsplash-js');
 
 const { shuffleArray } = require('./utils');
@@ -13,11 +13,6 @@ const jsonFilePath = path.join(dataDirectory, 'photos.json');
 if (!fs.existsSync(dataDirectory)) {
   fs.mkdirSync(dataDirectory);
 }
-
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-});
 
 // Create an instance of the Unsplash API
 const unsplash = createApi({
@@ -87,13 +82,12 @@ async function fetchListOfVariousPhotos(queries, transform) {
   }
 }
 
-// prompt user for input
-rl.question(
-  'Enter photo name(s) to search: (separate items with a comma if entering multiple items) ',
-  (searchTerm) => {
-    // Example search terms: architecture, textures patterns, galaxy
-    const queries = searchTerm.split(',');
-    fetchListOfVariousPhotos(queries, true);
-    rl.close();
-  }
+// Example search terms: architecture, textures patterns, galaxy
+const searchTerm = prompt(
+  'Enter photo name(s) to search. Comma delimit names if many: '
 );
+
+if (searchTerm) {
+  const searchList = searchTerm.split(',');
+  fetchListOfVariousPhotos(searchList, true);
+}
