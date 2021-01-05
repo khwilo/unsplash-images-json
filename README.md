@@ -2,6 +2,8 @@
 
 Fetch images from Unsplash and write the fetched images data to a JSON file.
 
+![Unsplash images to JSON demo](https://github.com/khwilo/project-demos/blob/master/unsplash-images-json/unsplash-images-json.gif)
+
 ## Motivation
 
 I wanted to use a random list of specified images on a project. There are various approaches to achieve this result:
