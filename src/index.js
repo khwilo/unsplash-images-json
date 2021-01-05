@@ -42,7 +42,7 @@ async function fetchPhotos(query, transformResult) {
               img: result.urls.regular,
               link: result.links.html,
               userId: result.user.id,
-              username: result.user.username,
+              userName: result.user.name,
               userLink: result.user.links.html,
               tags: result.tags.map((tag) => {
                 return tag.title;
